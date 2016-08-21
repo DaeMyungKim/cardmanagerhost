@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     IconTextListAdapter adapter;
     private DatabaseReference mDatabase;
     HashMap<String,CostData> map;
-
+//test
     @Override
     protected void onResume() {
         super.onResume();
