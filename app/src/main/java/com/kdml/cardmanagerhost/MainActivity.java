@@ -20,10 +20,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.kdml.cardmanagerhost.DTO.Cost;
 import com.kdml.cardmanagerhost.DTO.CostData;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
     ListView listView1;
@@ -44,29 +46,34 @@ public class MainActivity extends AppCompatActivity {
         else
             map.clear();
 
-        mDatabase = FirebaseDatabase.getInstance().getReference("cost");
+        mDatabase = FirebaseDatabase.getInstance().getReference("costsmap");
         mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                Map<String,HashMap> maptest = new HashMap<>();
+
                 for(DataSnapshot snapshot : dataSnapshot.getChildren())
                 {
                     try{
-                        String key = snapshot.getKey();
-                        CostData cd = snapshot.getValue(CostData.class);
-                        Log.d("kdml",cd.getCardName()+cd.getDateTime()+cd.getYearMonth()+cd.getYearMonth()+cd.getCardName()+cd.getCost());
-                        //CostData lcd = map.get(cd.getCardName());
-                        /*
-                        if(lcd != null)
-                        {
-                            if(Long.valueOf(lcd.getDateTimeOrigin())<Long.valueOf(cd.getDateTimeOrigin()))
-                            {
-                                map.remove(lcd);
-                                map.put(cd.getCardName(),cd);
+                        for(DataSnapshot shot : snapshot.getChildren()) {
+                            try{
+                                for(DataSnapshot sh : shot.getChildren()) {
+                                    try{
+
+                                        String key = sh.getKey();
+                                        Log.d("kdml",sh.toString());
+                                        CostData cd = sh.getValue(CostData.class);
+                                        Log.d("kdml",cd.getCardName()+ cd.getEmail()+ cd.getCost());
+                                        map.put(cd.getCardName()+cd.getEmail(),cd);
+                                    }catch(ClassCastException e){
+                                        e.printStackTrace();
+                                    }
+
+                                }
+                            }catch(ClassCastException e){
+                                e.printStackTrace();
                             }
                         }
-                        else*/
-                            map.put(cd.getCardName()+cd.getEmail(),cd);
-
                     }
                     catch (ClassCastException e)
                     {
@@ -93,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
         Resources res = getResources();
         for(CostData cd : map.values())
         {
-            adapter.addItem(new IconTextItem(res.getDrawable(R.drawable.icon05), cd.getCardName(), cd.getEmail(), cd.getCost()));
+            adapter.addItem(new IconTextItem(res.getDrawable(R.drawable.icon05), cd.getCardName(), cd.getName()+" "+cd.getPhone(), cd.getCost()));
         }
 
         /*

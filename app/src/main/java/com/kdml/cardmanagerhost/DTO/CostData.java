@@ -10,15 +10,31 @@ public class CostData {
     private String dateTimeOrigin;
     private String dateTime;
     private String email;
+    private String name;
+    private String phone;
+
     public CostData(){}
 
-    public CostData(String dateTime, String cardName, String yearMonth, String cost, String dateTimeOrigin,String email) {
+    public CostData(String dateTime, String cardName, String yearMonth, String cost, String dateTimeOrigin, String email, String name, String phone) {
+        this.cardName = cardName;
+        this.cost = cost;
+        this.dateTime = dateTime;
+        this.dateTimeOrigin = dateTimeOrigin;
+        this.email = email;
+        this.name = name;
+        this.phone = phone;
+        this.yearMonth = yearMonth;
+    }
+
+    public CostData(String dateTime, String cardName, String yearMonth, String cost, String dateTimeOrigin, String email) {
         this.dateTime = dateTime;
         this.cardName = cardName;
         this.yearMonth = yearMonth;
         this.cost = cost;
         this.dateTimeOrigin = dateTimeOrigin;
         this.email = email;
+
+
     }
 
     public CostData(String cardName, String yearMonth, String cost) {
@@ -73,5 +89,21 @@ public class CostData {
 
     public void setDateTime(String dateTime) {
         this.dateTime = dateTime;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }
