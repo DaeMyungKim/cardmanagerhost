@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         else
             map.clear();
 
-        mDatabase = FirebaseDatabase.getInstance().getReference("costsmap");
+        mDatabase = FirebaseDatabase.getInstance().getReference("costs");
         mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                     catch (ClassCastException e)
                     {
-                        e.printStackTrace();
+                        e.printStackTrace(); 
                     }
                 }
                 setListData();
@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
         Resources res = getResources();
         for(CostData cd : map.values())
         {
-            adapter.addItem(new IconTextItem(res.getDrawable(R.drawable.icon05), cd.getCardName(), cd.getName()+" "+cd.getPhone(), cd.getCost()));
+            adapter.addItem(new IconTextItem(res.getDrawable(R.drawable.icon05), cd.getCardName(), "이름:"+ cd.getName()+" 연락처:"+cd.getPhone(), cd.getCost()));
         }
 
         /*

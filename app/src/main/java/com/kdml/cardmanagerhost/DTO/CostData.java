@@ -7,40 +7,19 @@ public class CostData {
     private String cardName;
     private String yearMonth;
     private String cost;
-    private String dateTimeOrigin;
-    private String dateTime;
     private String email;
     private String name;
     private String phone;
 
     public CostData(){}
 
-    public CostData(String dateTime, String cardName, String yearMonth, String cost, String dateTimeOrigin, String email, String name, String phone) {
+    public CostData(String cardName, String yearMonth, String cost, String email, String name, String phone) {
         this.cardName = cardName;
         this.cost = cost;
-        this.dateTime = dateTime;
-        this.dateTimeOrigin = dateTimeOrigin;
         this.email = email;
         this.name = name;
         this.phone = phone;
         this.yearMonth = yearMonth;
-    }
-
-    public CostData(String dateTime, String cardName, String yearMonth, String cost, String dateTimeOrigin, String email) {
-        this.dateTime = dateTime;
-        this.cardName = cardName;
-        this.yearMonth = yearMonth;
-        this.cost = cost;
-        this.dateTimeOrigin = dateTimeOrigin;
-        this.email = email;
-
-
-    }
-
-    public CostData(String cardName, String yearMonth, String cost) {
-        this.cardName = cardName;
-        this.yearMonth = yearMonth;
-        this.cost = cost;
     }
 
     public String getEmail() {
@@ -75,21 +54,6 @@ public class CostData {
         this.cost = cost;
     }
 
-    public String getDateTimeOrigin() {
-        return dateTimeOrigin;
-    }
-
-    public void setDateTimeOrigin(String dateTimeOrigin) {
-        this.dateTimeOrigin = dateTimeOrigin;
-    }
-
-    public String getDateTime() {
-        return dateTime;
-    }
-
-    public void setDateTime(String dateTime) {
-        this.dateTime = dateTime;
-    }
 
     public String getName() {
         return name;
