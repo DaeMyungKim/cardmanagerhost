@@ -10,8 +10,18 @@ public class CostData {
     private String email;
     private String name;
     private String phone;
+    private String year;
+    private String month;
 
     public CostData(){}
+
+    public String getMonth() {
+        return month;
+    }
+
+    public String getYear() {
+        return year;
+    }
 
     public CostData(String cardName, String yearMonth, String cost, String email, String name, String phone) {
         this.cardName = cardName;
@@ -20,6 +30,7 @@ public class CostData {
         this.name = name;
         this.phone = phone;
         this.yearMonth = yearMonth;
+        setYearMonth(yearMonth);
     }
 
     public String getEmail() {
@@ -44,6 +55,15 @@ public class CostData {
 
     public void setYearMonth(String yearMonth) {
         this.yearMonth = yearMonth;
+        if(yearMonth.length() == 6)
+        {
+            year = yearMonth.substring(0,4);
+            month= yearMonth.substring(4,6);
+        }else if(yearMonth.length() == 5)
+        {
+            year = yearMonth.substring(0,4);
+            month= yearMonth.substring(4,5);
+        }
     }
 
     public String getCost() {

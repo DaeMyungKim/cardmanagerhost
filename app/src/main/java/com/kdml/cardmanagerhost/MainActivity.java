@@ -11,36 +11,64 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.google.firebase.auth.api.model.StringList;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.kdml.cardmanagerhost.DTO.Cost;
+
 import com.kdml.cardmanagerhost.DTO.CostData;
 
+
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
     ListView listView1;
     IconTextListAdapter adapter;
+    String yyyy;
+    String MM;
+    Spinner yearSpinner;
+    Spinner monthSpinner;
     private DatabaseReference mDatabase;
     HashMap<String,CostData> map;
 //test
     @Override
     protected void onResume() {
         super.onResume();
-
+        Calendar cal = Calendar.getInstance();
+        yyyy = String.valueOf(cal.get(Calendar.YEAR));
+        MM = String.valueOf((cal.get(Calendar.MONTH) + 1));
         setData();
     }
     public void setData()
     {
+        for(int i = 0; i < yearSpinner.getCount();i++)
+        {
+            String sel = (String)yearSpinner.getItemAtPosition(i);
+            if(sel.replace("년","").equals(yyyy))
+            {
+                yearSpinner.setSelection(i);
+            }
+        }
+
+        for(int i = 0; i < monthSpinner.getCount();i++)
+        {
+            String sel = (String)monthSpinner.getItemAtPosition(i);
+            if(sel.replace("월","").equals(MM))
+            {
+                monthSpinner.setSelection(i);
+            }
+        }
+
         if(map==null)
             map =new HashMap<String, CostData>();
         else
@@ -100,7 +128,8 @@ public class MainActivity extends AppCompatActivity {
         Resources res = getResources();
         for(CostData cd : map.values())
         {
-            adapter.addItem(new IconTextItem(res.getDrawable(R.drawable.icon05), cd.getCardName(), "이름:"+ cd.getName()+" 연락처:"+cd.getPhone(), cd.getCost()));
+            if(yyyy.equals(cd.getYear()) && MM.equals(cd.getMonth()))
+                adapter.addItem(new IconTextItem(res.getDrawable(R.drawable.icon05), cd.getCardName(), "이름:"+ cd.getName()+" 연락처:"+cd.getPhone(), cd.getCost()));
         }
 
         /*
@@ -150,6 +179,54 @@ public class MainActivity extends AppCompatActivity {
         listView1 = (ListView) findViewById(R.id.listView1);
 
 
+        // Spinner
+        yearSpinner = (Spinner)findViewById(R.id.spinner_year);
+        ArrayAdapter yearAdapter = ArrayAdapter.createFromResource(this,
+                R.array.date_year, android.R.layout.simple_spinner_item);
+        yearAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        yearSpinner.setAdapter(yearAdapter);
+
+
+        yearSpinner.setSelection(0);
+
+        yearSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String str = parent.getSelectedItem().toString();
+                Log.d("kdml", "ss:"+str );
+                yyyy = str.replace("년","");
+                setData();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        monthSpinner = (Spinner)findViewById(R.id.spinner_month);
+        ArrayAdapter monthAdapter = ArrayAdapter.createFromResource(this,
+                R.array.date_month, android.R.layout.simple_spinner_item);
+        monthAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        monthSpinner.setAdapter(monthAdapter);
+
+
+        monthSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String str = parent.getSelectedItem().toString();
+                Log.d("kdml", "ss:"+str );
+                MM = str.replace("월","");
+                setData();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
     }
 
     @Override
@@ -173,4 +250,6 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
 }

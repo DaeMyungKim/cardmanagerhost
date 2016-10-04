@@ -1,4 +1,27 @@
 <resources>
     <string name="app_name">CardManager 모집인용</string>
     <string name="action_settings">설정</string>
+    <string name="select_month">날짜 :</string>
+
+    <string-array name="date_year">
+        <item>2016년</item>
+        <item>2015년</item>
+        <item>2014년</item>
+    </string-array>
+
+    <string-array name="date_month">
+        <item>1월</item>
+        <item>2월</item>
+        <item>3월</item>
+        <item>4월</item>
+        <item>5월</item>
+        <item>6월</item>
+        <item>7월</item>
+        <item>8월</item>
+        <item>9월</item>
+        <item>10월</item>
+        <item>11월</item>
+        <item>12월</item>
+    </string-array>
+
 </resources>
